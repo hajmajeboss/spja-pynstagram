@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pynstagram</title>
+    <link rel="stylesheet" href="{% static 'pynstagram/style.css' %}" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&amp;subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fauna+One&amp;subset=latin-ext" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+         $(document).ready(function(){
+            $('#header').load("{% url 'header' %}");
+            setTimeout(function () {
+                window.location.href="{%  url 'index' %}"
+            }, 3000)
+        })
+    </script>
+</head>
+<body>
+<div id="header"></div>
+<div id="content-wrapper">
+    <div class="wrapper-cell">
+        <div class="wrapper" style="display:block; width: 500px;">
+            {% if success %}
+                <h3 style="text-align: center">Your message has been successfully sent!</h3>
+                <p style="text-align:center; padding-bottom:0px;">You will be automatically redirected to the main page.</p>
+            {% else %}
+                <h3 tyle="text-align: center">Something failed while sending your message!</h3>
+                <p style="text-align:center; padding-bottom:0px;">You will be automatically redirected to the main page.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

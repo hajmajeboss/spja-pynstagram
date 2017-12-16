@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ photo.owner }}'s photo | Pynstagram </title>
+    <link rel="stylesheet" href="{% static 'pynstagram/style.css' %}" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&amp;subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fauna+One&amp;subset=latin-ext" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+         $(document).ready(function(){
+              $('#header').load("{% url 'header' %}");
+        })
+    </script>
+</head>
+<body>
+<div id="header"></div>
+ <div id="content-wrapper">
+    <div class="wrapper-cell">
+    <div class="wrapper">
+        <div id="left">
+            <a href="{%  url 'user' photo.owner.id %}"><h3>{{ photo.owner.name }}</h3></a>
+            <h5>Added: {{ photo.created|date:"d. E Y, H:i"  }}</h5>
+            <img src="{{ photo.image.url }}" alt = "" width="500">
+             <p>{{ photo.description }}</p>
+        </div>
+        <div id ="right">
+            <h3>Comments</h3>
+            {%  for comment in comments %}
+                <p><b>{{ comment.author }}</b> : {{ comment.text }}</p>
+            {% empty %}
+                <p>No comments to display. What about adding a one?</p>
+            {% endfor%}
+
+            <h3 style="margin-top: 30px;">Add a comment</h3>
+            <form action="{% url 'add_comment' photo.id %}" method="POST">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <input type="Submit" value="Submit" class="submit"/>
+            </form>
+        </div>
+    </div>
+    </div>
+ </div>
+</body>
+</html>

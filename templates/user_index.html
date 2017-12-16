@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users | Pynstagram</title>
+    <link rel="stylesheet" href="{% static 'pynstagram/style.css' %}" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&amp;subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fauna+One&amp;subset=latin-ext" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+         $(document).ready(function(){
+            $('#header').load("{% url 'header' %}");
+        })
+    </script>
+</head>
+<body>
+<div id="header"></div>
+<div id="content-wrapper">
+    <div class="wrapper-cell">
+        <div class="wrapper" style="width:500px;">
+            <form method="POST" action="{% url 'user_index' %}">
+                {% csrf_token %}
+                {{ search_users.name }}
+                <input type="submit" value="Search" class="submit" style="float:left">
+            </form>
+        </div>
+    </div>
+    {% for user in users %}
+        <div class="wrapper-cell">
+
+                <div class="wrapper" style="display:block; width: 500px;">
+                    <a href="{% url 'user' user.id %}" style="margin:0; padding:0; width: 500px;"> <h3>{{ user.name }}</h3> </a>
+                    <h5>{{ user.email }}</h5>
+                    <p style="color: gray;">{{ user.description }}</p>
+                </div>
+
+        </div>
+    {% endfor %}
+</div>
+</body>
+</html>

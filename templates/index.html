@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pynstagram</title>
+    <link rel="stylesheet" href="{% static 'pynstagram/style.css' %}" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&amp;subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fauna+One&amp;subset=latin-ext" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+         $(document).ready(function(){
+            $('#header').load("{% url 'header' %}");
+        })
+    </script>
+</head>
+<body>
+    <div id="header"></div>
+    <div id="content-wrapper">
+    {% for photo in photos %}
+        <div class="wrapper-cell">
+            <div class="wrapper" style="display:block; width: 500px;">
+                <div class="picture-wrapper">
+                    <a href="{%  url 'user' photo.owner.id %}"><h3>{{ photo.owner.name }}</h3></a>
+                    <h5>Added: {{ photo.created|date:"d. E Y, H:i"  }}</h5>
+                    <a href="{%  url 'photo_index' photo.id %}"><img src="{{ photo.image.url }}" alt = "" width="500"></a>
+                    <a href="{%  url 'photo_index' photo.id %}"><p>{{ photo.description }}</p></a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</body>
+</html>
